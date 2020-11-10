@@ -1,6 +1,6 @@
 <section class="my-4">
         <div class="container">
-            <h2>Program Studi</h2>
+            <h2>Agama</h2>
 
             <?php if (!empty($session)) { ?>
 
@@ -14,7 +14,7 @@
             <?php } ?>
 
             <p>
-                <a href="<?php echo site_url('Program_Studi/add'); ?>" class="btn btn-primary btn-sm">
+                <a href="<?php echo site_url('Agama/add'); ?>" class="btn btn-primary btn-sm">
                     <i class="fa fa-plus"></i> Tambah
                 </a>
             </p>
@@ -23,36 +23,34 @@
                     <tr>
                         <th width="170">Aksi</th>
                         <th>Kode</th>
-                        <th>Program Studi</th>
-                        <th>Ketua</th>
+                        <th>Agama</th>
                     </tr>
                 </thead>
                 <tbody>
 
-                    <?php foreach ($dataProdi as $row) : ?>
+                    <?php foreach ($dataAgama as $row) : ?>
 
                     <tr>
                         <th>
-                            <a href="<?php echo site_url('Program_Studi/edit/'.$row->kode_prodi); ?>" class="btn btn-warning btn-sm">
+                            <a href="<?php echo site_url('Agama/edit/'.$row->kode_agama); ?>" class="btn btn-warning btn-sm">
                                 <i class="fa fa-pencil"></i> Ubah
                             </a>
-                            <a href="<?php echo site_url('Program_Studi/delete/'.$row->kode_prodi); ?>" class="btn btn-danger btn-sm" onclick="return confirm('Apakah yakin data akan dihapus?');">
+                            <a href="<?php echo site_url('Agama/delete/'.$row->kode_agama); ?>" class="btn btn-danger btn-sm" onclick="return confirm('Apakah yakin data akan dihapus?');">
                                 <i class="fa fa-trash"></i> Hapus
                             </a>
                         </th>
-                        <td><?php echo $row->kode_prodi; ?></td>
-                        <td><?php echo $row->nama_prodi; ?></td>
-                        <td><?php echo $row->ketua_prodi; ?></td>
+                        <td><?php echo $row->kode_agama; ?></td>
+                        <td><?php echo $row->agama; ?></td>
                     </tr>
 
                     <?php
                         endforeach;
 
-                        if (empty($dataProdi)) {
+                        if (empty($dataAgama)) {
                     ?>
 
                     <tr>
-                        <td colspan="4" class="text-center">Tidak ada data</td>
+                        <td colspan="3" class="text-center">Tidak ada data</td>
                     </tr>
 
                     <?php } ?>

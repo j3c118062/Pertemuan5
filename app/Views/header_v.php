@@ -7,16 +7,13 @@
     <meta name="author">
     <meta name="description">
     <meta name="keyword">
-
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     
     <!-- Fontawesome CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-
     <!-- Custom CSS -->
     <link rel="stylesheet" href="<?php echo base_url('assets/css/style.css'); ?>">
-
     <title>IPB University</title>
   </head>
   <body>
@@ -30,21 +27,27 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ml-auto">
                 <li class="nav-item active">
+                <li class="nav-item<?php if (current_url(true)->getTotalSegments() == 0 || current_url(true)->getSegment(1) == 'Beranda') echo ' active'; ?>">
                     <a class="nav-link" href="<?php echo site_url('Beranda'); ?>">Beranda <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
+                <li class="nav-item<?php if (current_url(true)->getSegment(1) == 'Program_Studi') echo ' active'; ?>">
                     <a class="nav-link" href="<?php echo site_url('Program_Studi'); ?>">Program Studi</a>
                 </li>
                 <li class="nav-item">
+                <li class="nav-item<?php if (current_url(true)->getSegment(1) == 'Mahasiswa') echo ' active'; ?>">
                     <a class="nav-link" href="<?php echo site_url('Mahasiswa'); ?>">Mahasiswa</a>
                 </li>
                 <li class="nav-item dropdown">
+                <li class="nav-item dropdown<?php if (current_url(true)->getSegment(1) == 'Agama' || current_url(true)->getSegment(1) == 'Hobi') echo ' active'; ?>">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Data Master
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="<?php echo site_url('Agama'); ?>">Agama</a>
                     <a class="dropdown-item" href="<?php echo site_url('Hobi'); ?>">Hobi</a>
+                    <a class="dropdown-item<?php if (current_url(true)->getSegment(1) == 'Agama') echo ' active'; ?>" href="<?php echo site_url('Agama'); ?>">Agama</a>
+                    <a class="dropdown-item<?php if (current_url(true)->getSegment(1) == 'Hobi') echo ' active'; ?>" href="<?php echo site_url('Hobi'); ?>">Hobi</a>
                     <!--div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="#">Something else here</a-->
                     </div>

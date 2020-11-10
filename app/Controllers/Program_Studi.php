@@ -1,29 +1,82 @@
 <?php
 namespace App\Controllers;
-
 use App\Models\Program_Studi_Model;
-
 class Program_Studi extends BaseController {
+    public function __construct() {
+        $this->session = \Config\Services::session();
 
-
-
-        public function index() {
         $db = \Config\Database::connect();
 
-        $data['dataProdi'] = $db->table('prodi')->getResult();
+        $this->prodi = new Program_Studi_Model($db);
+        $this->prodiModel = new Program_Studi_Model($db);
+    }
 
-
-
-        //var_dump($data);die;
+    public function index() {
+        $data['session'] = $this->session->getFlashdata('response');
+        $data['dataProdi'] = $this->prodi->get()->getResult();
+        $data['dataProdi'] = $this->prodiModel->get()->getResult();
 
         echo view('header_v');
         echo view('program_studi_v', $data);
         echo view('footer_v');
-        }
-
-        
-
+    }
     public function add() {
+        echo view('header_v');
+        echo view('program_studi_form_v');
+        echo view('footer_v');
+    }
+    public function edit($id) {
+        $where = ['kode_prodi' => $id];
 
+        $data['dataProdi'] = $this->prodi->get($where)->getResult()[0];
+        $data['dataProdi'] = $this->prodiModel->get($where)->getResult()[0];
+
+        echo view('header_v');
+        echo view('program_studi_form_v', $data);
+        echo view('footer_v');
+    }
+    public function save() {
+        $data = [
+            'kode_prodi' => $this->request->getPost('kode'),
+            'nama_prodi' => $this->request->getPost('nama'),
+            'ketua_prodi' => $this->request->getPost('ketua')
+        ];
+        $id = $this->request->getPost('id');
+
+        if (empty($id)) { //Insert
+            $response = $this->prodi->insert($data);
+            $response = $this->prodiModel->insert($data);
+
+            if ($response->resultID) {
+                $this->session->setFlashdata('response', ['status' => $response->resultID, 'message' => 'Data berhasil disimpan.']);
+            } else {
+                $this->session->setFlashdata('response', ['status' => $response->resultID, 'message' => 'Data gagal disimpan. '. $response->connID->error]);
+            }
+        } else { // Update
+            $where = ['kode_prodi' => $id];
+
+            $response = $this->prodi->update($data, $where);
+            $response = $this->prodiModel->update($data, $where);
+
+            if ($response) {
+                $this->session->setFlashdata('response', ['status' => $response, 'message' => 'Data berhasil disimpan.']);
+            } else {
+                $this->session->setFlashdata('response', ['status' => $response, 'message' => 'Data gagal disimpan.']);
+            }
+        }
+        return redirect()->to(site_url('Program_Studi'));
+    }
+    public function delete($id) {
+        $where = ['kode_prodi' => $id];
+
+        $response = $this->prodi->delete($where);
+        $response = $this->prodiModel->delete($where);
+
+        if ($response->resultID) {
+            $this->session->setFlashdata('response', ['status' => $response->resultID, 'message' => 'Data berhasil dihapus.']);
+        } else {
+            $this->session->setFlashdata('response', ['status' => $response->resultID, 'message' => 'Data gagal dihapus. '. $response->connID->error]);
+        }
+        return redirect()->to(site_url('Program_Studi'));
     }
 }
